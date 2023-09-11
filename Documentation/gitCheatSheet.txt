@@ -1,0 +1,68 @@
+#############################0#######################################################################
+# git cheatsheet
+####################################################################################################
+----------------------------------------------------------------------------------------------------
+- Setup
+----------------------------------------------------------------------------------------------------
+
+* git config --global user.name "KHAN Daniel"
+* git config --global user.email "daniel.khan@ext.ec.europa.eu"
+* git clone https://citnet.tech.ec.europa.eu/CITnet/stash/scm/essppda1/esspass-pda1-issuer-be.git
+* git remote add origin https://citnet.tech.ec.europa.eu/CITnet/stash/scm/essppda1/esspass-pda1-issuer-be.git
+* git remote remove origin 
+* git remote set-url origin https://citnet.tech.ec.europa.eu/CITnet/stash/scm/essppda1/esspass-pda1-issuer-be.git
+
+* git init
+* git flow init  //initializes the develop branch 
+* git add --all
+* git commit -m "Initial Commit"
+* git stash  // to store temporary WIP
+* git stash apply  // to load stored changes as actual, 
+* git stash show  // to see what is happening with the stash
+* git stash clear // to remove pending issues
+* git status // to see current state of work
+* git tag -d v0.1.2
+
+
+* git flow feature start  ESSPPDA1-20
+* git add --all
+* git commit -a -m " ESSPPDA1-20-2"
+* git push --set-upstream origin feature/ESSPPDA1-20
+* git flow feature finish  ESSPPDA1-20
+* git flow release start 0.4.0
+* npm version minor
+* git flow release finish '0.4.0' -m "fixed  ESSPPDA1-20"
+or
+* scripts\saveFeature.bat  ESSPPDA1-98 restPDA1Service1  0.2.2
+
+* scripts\saveFeature.bat  ESSPPDA1-20 refresh  0.3.7
+* git flow bugfix start  ESSPPDA1-20
+* git add --all
+* git commit -m "Fixed  ESSPPDA1-20; Doc update"
+* git push --set-upstream origin bugfix/ ESSPPDA1-20
+* git flow bugfix finish -F  ESSPPDA1-20
+* git flow release start 0.2.0
+* npm version patch
+* git flow release finish 0.2.5 -m "fixed  ESSPPDA1-20"
+or
+* scripts\saveBugfix.bat ESSPPDA1-24 branchFixing  0.3.1
+
+----------------------------------------------------------------------------------------------------
+- Updating remote repository
+----------------------------------------------------------------------------------------------------
+
+* git push -u origin HEAD:main
+* git push -u origin HEAD:develop
+* git push origin --tags
+
+* git reset --hard 3c4056908d3e0073685475a20b4baa70fab6edee // jumnping through branches
+* git pull https://citnet.tech.ec.europa.eu/CITnet/stash/scm/essppda1/esspass-pda1-issuer-be.git  // for updating local directories
+* git push -f -u origin HEAD:main
+
+####################################################################################################
+# END : git cheatsheet
+####################################################################################################
+
+
+
+
