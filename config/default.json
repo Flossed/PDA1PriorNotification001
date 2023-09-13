@@ -1,0 +1,7 @@
+{   "application"   : {   "logFileName"                    : "PDA1PN001",
+                          "applicationName"                : "PDA1PN001",
+                          "logTracelevel"                  : "trace",
+                          "consoleOutput"                  : "on"                          
+                      }
+}
+
