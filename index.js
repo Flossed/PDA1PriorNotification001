@@ -12,17 +12,20 @@
    11. Transform the zlib file to a QR code
 */
 require( 'dotenv' ).config();
+const fs                               = require('fs/promises')
 
 const Logger                           = require( './services/loggerClass' );
 const config                           = require( './services/configuration' );
 const EC                               = require( './services/errorCatalog' );
 
-const Validator                          = require( 'jsonschema' ).Validator;
+const Validator                        = require( 'jsonschema' ).Validator;
 const $RefParser                       = require( '@apidevtools/json-schema-ref-parser' );
 // eslint-disable-next-line no-undef
 const FileName                         = process.env.PDA1ACKNOWLEDGEMENTSCHEMA;
 // eslint-disable-next-line no-undef
 const dataSet                          = process.env.PDA1DATASET;
+const outputJson                       = process.env.OUTPUTJSON;
+
 let   jsonDocument                     = ' ';
 
 let   lastSeqNo                        = 0;
@@ -778,6 +781,8 @@ async function main ()
         {   logger.error( applicationName + ':index:main:Validation returned errors',result );
             return result;
         }
+
+        await  fs.writeFile(outputJson, jsonDocument);
 
         logger.debug( applicationName + ':index:main:jsonDocument',JSON.parse( jsonDocument ) );
         logger.trace( applicationName + ':index:main:Ending' );
