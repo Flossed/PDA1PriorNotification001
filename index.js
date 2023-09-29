@@ -12,7 +12,8 @@
    11. Transform the zlib file to a QR code
 */
 require( 'dotenv' ).config();
-const fs                               = require('fs/promises')
+const fs                               = require( 'fs/promises' );
+const cbor                             = require( 'cbor' );
 
 const Logger                           = require( './services/loggerClass' );
 const config                           = require( './services/configuration' );
@@ -25,15 +26,11 @@ const FileName                         = process.env.PDA1ACKNOWLEDGEMENTSCHEMA;
 // eslint-disable-next-line no-undef
 const dataSet                          = process.env.PDA1DATASET;
 const outputJson                       = process.env.OUTPUTJSON;
-
 let   jsonDocument                     = ' ';
-
 let   lastSeqNo                        = 0;
-
-const logFileName = config.get( 'application:logFileName' );
-const applicationName = config.get( 'application:applicationName' );
-
-const logger = new Logger( logFileName );
+const logFileName                      = config.get( 'application:logFileName' );
+const applicationName                  = config.get( 'application:applicationName' );
+const logger                           = new Logger( logFileName );
 
 
 function generateRandomString ( stringDef )
@@ -42,30 +39,29 @@ function generateRandomString ( stringDef )
 
         if ( typeof stringDef === 'undefined' || stringDef === null )
         {   logger.error( applicationName + ':index:generateRandomString:incorrect input parameters' );
-            const response                   = EC.badRequest;
+            const response             = EC.badRequest;
             return response;
         }
 
-        let maxStringLength                = 10000;
-        let tempString                     = '';
+        let maxStringLength            = 10000;
+        let tempString                 = '';
 
         if ( typeof stringDef.maxLength === 'number' )
-        {   maxStringLength                = stringDef.maxLength;
+        {   maxStringLength            = stringDef.maxLength;
         }
         for ( let i = 0; i < maxStringLength; i++ )
-        {    tempString                    = tempString.concat( String.fromCharCode( Math.round( Math.random() * ( 122 - 97 ) + 97 ) ) );
+        {    tempString                = tempString.concat( String.fromCharCode( Math.round( Math.random() * ( 122 - 97 ) + 97 ) ) );
         }
         logger.trace( applicationName + ':index:generateRandomString:Ending' );
-        const response                       = EC.noError;
-        response.body                      = tempString;
+        const response                 = EC.noError;
+        response.body                  = tempString;
         return response;
     }
     catch ( ex )
-    {   const response                      = EC.exception;
-        response.body                       = ex;
+    {   const response                 = EC.exception;
+        response.body                  = ex;
         logger.exception( applicationName + ':index:generateRandomString:Exception caught: ',ex );
         return response;
-
     }
 }
 
@@ -75,7 +71,7 @@ function getJSONSchema ( fileName )
 
         if ( typeof fileName === 'undefined' || fileName === null )
         {   logger.error( applicationName + ':index:getJSONSchema:incorrect input parameters' );
-            const response                   = EC.badRequest;
+            const response             = EC.badRequest;
             return response;
         }
 
@@ -86,8 +82,8 @@ function getJSONSchema ( fileName )
         return response;
     }
     catch ( ex )
-    {   const response                   = EC.exception;
-        response.body                    = ex;
+    {   const response                 = EC.exception;
+        response.body                  = ex;
         logger.exception( applicationName + ':index:getJSONSchema:Exception caught : ',ex );
         return response;
     }
@@ -752,7 +748,7 @@ async function validateSchema ( schema, jsonInput )
     }
 }
 
-async function main ()
+async function mainO ()
 {   try
     {   logger.trace( applicationName + ':index:main:Starting' );
         const response                   = EC.noError;
@@ -782,7 +778,10 @@ async function main ()
             return result;
         }
 
-        await  fs.writeFile(outputJson, jsonDocument);
+        await  fs.writeFile( outputJson, jsonDocument );
+        const encoded = cbor.encode( jsonDocument ); // Returns <Buffer f5>
+        console.log( encoded.length );
+
 
         logger.debug( applicationName + ':index:main:jsonDocument',JSON.parse( jsonDocument ) );
         logger.trace( applicationName + ':index:main:Ending' );
@@ -796,5 +795,118 @@ async function main ()
     }
 }
 
+/*
+   1. read a JSON schema
+   2. generate a JSON document from the schema
+   3. validate the JSON document against the schema
+   4. write the JSON document to a file
+   5. transform JSON file to CBOR file
+   6. create singing tree with X509 certificates
+   7. Sign the CBOR file with a private key as COSE_Sign1
+   8. Write the COSE_Sign1 file to a file
+   9. base 45 encode the COSE_Sign1 file
+   10. zlib compress the base 45 encoded COSE_Sign1 file
+   11. Transform the zlib file to a QR code
+*/
+function 01_readJSONSchema()
+{   try
+    {
+
+    }
+    catch ( ex )
+    {  
+
+    }
+
+}
+
+async function main ()
+{   try
+    {   const introductionText = ( '\n\n\n\n\n\n\nHello and welcome to the world of JSON schema and data generation.\n' +
+                                'This application will :\n' +
+                                ' 1. generate a JSON document from a JSON schema.\n' +
+                                ' 2. Schema validate it to make sure all is well\n' +
+                                ' 3. written to a file. \n' +
+                                ' 4. Transformed to a CBOR document (RFC8949 compliant).\n' +
+                                ' 5. A  signing authority will bre created.\n' +
+                                ' 6. The CBOR document will be signed with using COSE and assuming an X509 Certificate using RSA as encyption.\n' +
+                                ' 7. encoded using base 45.\n' +
+                                ' 8. ZLIBded.\n' +
+                                ' 9. QRcoded.\n' +
+                                ' 10.  The QR code will be written to a file. Enjoy!\n\n\n\n' +
+                                '                                  *+=+: :+%%+..*+:+:.                 .             \n' +
+                                '                             .%+-*:+*-=%=: :-+=+.+*--  --..                         \n' +
+                                '                          -*@-*#%+::-@@=+..-=%=-.  :=*:   .:...                     \n' +
+                                '                       .@#%=*=%+-*=%*- .-+=+:.-+-:..-+:.  :+:  .                    \n' +
+                                '                     .@%=*=#%=+:*##%*:  =@%+:  *%=+. . ++: .   .:: :                \n' +
+                                '                   @###%++#@%=*::%%=+.  +=*-.  +%=-.   -+.    :-..  :               \n' +
+                                '                  #%%#%%*.:=*--..+=+. .:*=*-.  :*+:   .+:     .:  ... .             \n' +
+                                '                 ##%==*--:+@@%%======***=@%+  .-::-. ....  . ...     . ::           \n' +
+                                '                @#%*:+@##@@@%%=.*===*******+:.:--:::..::-:.           - ..          \n' +
+                                '               #%*+*=#####%%%%%%+===*****+++----:::...-.    .        .   .          \n' +
+                                '               @#**######@@%%%======*****+++----:::.....          ..  .. ..         \n' +
+                                '              #@*-*######@@%%======*****+++----::::......         ...:-. ..         \n' +
+                                '              #%*-%#####@@%%=======****++++----::::......         ..:-=*: .         \n' +
+                                '             .#=+*@####@@%%%=***===***++++-----::::..   ...       ..:.+-. .         \n' +
+                                '              @@==#####@%%*-+%=-+%=***+-*=+:---::::.   ..-:.      ..:    . :        \n' +
+                                '              #%*%###@@%=+=%==*++++**%%@%=*-. ..::::.:+-:.:+..    ..:: : . .        \n' +
+                                '            :##*+##@%%%====**++--::=#@====+:     ..+*++-::.. .:   ..::   ...        \n' +
+                                '            #+*%+##@@@%%%===*++-:  :@*+.*-.   -:  +%%*+--:...     ..:-.  .          \n' +
+                                '            #===###@@%%===**++:.  :====*++--::-:..:@%*+--::...      .:-...  .       \n' +
+                                '            :@=####@%%==**+-:      -+***++:.      .+=*++---:..       .:...:.:       \n' +
+                                '            #@####@@%%=**+-::.::--. :#%*++-:.   *+%%=%%=*+--:.        .: ::         \n' +
+                                '            #@###@@%%==***++----+++..:=..::.   -@@***==*+--:..        .:.. :        \n' +
+                                '           #@%###@%%%===**+++----+**..-+::+++-=@%++***++--::.          ... :        \n' +
+                                '          ##@%##@@%%%==****++++-+*==+ ==*+-::-%*::++++--::...          ...  :       \n' +
+                                '         ##@%%@@@@%%===****++++--+===+::*++++*. .:-----:....          .: :   :      \n' +
+                                '         ##@%=*%%%%===***++++++--++***++---:.  .::-::::....          .: ::   .      \n' +
+                                '         -@%=*+:====**+++++++-----+++++---:.............            .:.++:    :     \n' +
+                                '           =*-:. :***+++-----------+++---::........                ..-+--.          \n' +
+                                '               -=%@#*++---------------::::..                       -++-:.           \n' +
+                                '                @%=#@@@%----:::::::::.....                     .    ..              \n' +
+                                '              #@%==@#@%=*:*%%%=====**+++--::::..   ..     .*+:.. . :. .:            \n' +
+                                '             #@%%==*#@%%=+:=@%%==**++++---**+++--::::.. .-*+:..   -:. .:.           \n' +
+                                '            #@@%=**+*#@%%=+ %@%===***++--++*+++--:::.. .+*-:..   :-:.  .:           \n' +
+                                '           @#@%==*+--+#@%%%+.@%%==***++--+++++---:....:+*-...   ---:.. ..:          \n' +
+                                '           @%==+++----*#@%%%-.%%%==**++--+*++---:...:-**.     :**+-::. ..:          \n' +
+                                '         :#%****+----++-#@%%%*.%%==**+++-++++---::.:*=+.     +%=**+-:.  .::         \n' +
+                                '         ##@@@%%==*+-:..:#@@%%=.===*+#@==*-..:::::-=*..  . :**++-::. :....:         \n' +
+                                '         ####@@@%===**+++---%%%%::=*##@%*-:  .::+=*...:+=**+-:... ..      .:        \n' +
+                                '         #####@@@%%%====****-:...-.+=***.**-:.:.+++*===*:--:.             .:        \n' +
+                                '         ######@@@@%%=%%=::**@%==*++-:.  =%++-:::::...:+**-..             .:        \n' +
+                                '         #####@@@%@@@%- .:=#@=+.   .-*@* %*..:::.:--:.   .=+-..          ..-        \n' +
+                                '        #####@@@@@%*.   :%#@%*-.   -@#%: @=-.: -**==+:     **-. .      ....:        \n' +
+                                '       @#%@@@%*-: .   -+=@@%%=**+--*%*-  =%+:. :+*=+:       **+-:  .    ..::        \n' +
+                                '      #%=*=========*-:::-*=******++-.    *-*+--:::.          =*+-:.        .-       \n' +
+                                '    @+=*%@@@@@%*-:-+++==*++**@***:-. .-==*-+++:      .....*%-..==-:...    .: .      \n' +
+                                '   %+-@=****+*==%%%%====**+--*=%+==. *@@%=+-::...--+***+-.:+=%+: --:::.   .. *==+:  \n' +
+                                '  ##@=:.+#@###@@@%%%%=****====**@.  :%@%%=+----::--+***+--:.+*:  .::  .    ..*+-*.: \n' +
+                                ' %#@@@%+.:@@@%#@%=*:+====%=**=%.   -==**--.--::::::-----::.:=*-:....      .*%+  :.: \n' +
+                                ' ##@@%%=*:.*###%%=**+- =**%*     @%==**++-:.  .....:::::-=%=-:.    .     -=%.   ..: \n' +
+                                ' ##@%%===+*##@@*@=**++-: :     @%%====+.=-..    +-::--.%%*+-::.  .   . .-%+     ::. \n' +
+                                '  @@%=+=%*%##@@-@=*++---:  -.#@%%====*-.=-.      --:*%%=*++-:.   .   .:==.      ..  \n' +
+                                '  @@%=-%**=#@@%-@=++--:.:  .#@%%%%===+.-*:.       .=@==**+-:..   .   .: .           \n' +
+                                '   =%*+=***@@@%-%=+---..-  .=@%%%===*+ ++:.        +===-*::...        .        ..   \n' +
+                                '     *.:+++*%%=+*=++-: +.  .=@%=%==*+- +-..       .+===- +:..       .:        ..    \n' +
+                                '             =+*-%+-: .-   .*@%%***+-- *:.        :***+-..:.       ...       ..    \n' );
+
+        logger.trace( applicationName + ':index:main:Starting' );
+        console.log( introductionText );
+        logger.trace( applicationName + ':index:main:Ending' );
+        return EC.noError;
+    }
+    catch ( ex )
+    {   const response                 = EC.exception;
+        response.body                  = ex;
+        logger.exception( applicationName + ':index:main:Exception caught: ',ex );
+        let result                     = 01_readJSONSchema();
+        if ( result.returnCode !== EC.noError.returnCode )
+        {   logger.error( applicationName + ':index:main:Error in readJSONSchema',result );
+            return result;
+        }
+
+        return response;
+    }
+}
 
 main();

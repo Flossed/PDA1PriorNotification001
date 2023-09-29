@@ -31,7 +31,8 @@ public/docsold
 !/scripts
 !/config
 !/documentation
-!/_CODARECORDS
+!/DataSet
+!/Schemas
 
 #########################################################################################################
 #   1. /*                           'exclude everything'
