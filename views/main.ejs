@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('layouts/header'); -%>
+   <body>
+   <%- include('layouts/heading'); -%>
+   <%- include('layouts/navbar'); -%>
+   
+   
+      <div class="main">
+         <h1>PDA1 Prior notification</h1>  
+         This application is meant create a paper attestation containing a verifiable attestation in the for of a QR-CODE.
+         
+         <h2>General Functionality</h2>
+         <ol  type="1">
+            <li>Generate verifiable credential in the form of a EUDCC compatible QR Code</li>
+            <li>Verify a verifiable credential in the form of a EUDCC compatible QR Code</li>
+            <li>Read a JSON schema\n'</li>
+            <li>Generate a JSON document from the schema\n' +</li>
+            <li>Validate the JSON document against the schema\n' +</li>
+            <li>Write the JSON document to a file\n' +</li>
+            <li>Transform JSON file to CBOR file\n' +</li>
+            <li>Create singing tree with X509 certificates\n' +</li>
+            <li>Sign the CBOR file with a private key as COSE_Sign1\n' +</li>
+            <li>Write the COSE_Sign1 file to a file\n' +</li>
+            <li>Base 45 encode the COSE_Sign1 file\n' +</li>
+            <li>zlib compress the base 45 encoded COSE_Sign1 file\n' +</li>
+            <li>Transform the zlib file to a QR code\n'</li>
+         </ol>
+      </div>
+   </body>
+</html>

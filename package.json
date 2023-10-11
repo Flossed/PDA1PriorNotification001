@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha --exit",
-    "start": "nodemon index"
+    "start": "nodemon --ignore './output/*.json' index"
   },
   "repository": {
     "type": "git",
@@ -26,15 +26,31 @@
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^10.1.0",
     "ajv": "^8.12.0",
+    "base45": "^2.0.1",
+    "body-parser": "^1.20.2",
     "cbor": "^9.0.1",
+    "cors": "^2.8.5",
+    "cose-js": "^0.9.0",
     "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
     "fs": "^0.0.1-security",
+    "jimp": "^0.22.10",
     "json-schema-faker": "^0.5.3",
     "jsonschema": "^1.4.1",
     "nconf": "^0.12.0",
     "nodemon": "^3.0.1",
+    "png.js": "^0.2.1",
+    "pngjs": "^7.0.0",
+    "qcode-decoder": "^0.1.0",
+    "qrcode": "^1.5.3",
+    "qrcode-reader": "^1.0.4",
     "schema-validator": "^3.3.1",
     "semver": "^7.5.4",
-    "winston": "^3.10.0"
+    "winston": "^3.10.0",
+    "zlib": "^1.0.5"
+  },
+  "devDependencies": {
+    "html5-qrcode": "^2.3.8"
   }
 }
