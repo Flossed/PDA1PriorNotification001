@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('layouts/header'); -%>
+   <body>
+   <%- include('layouts/heading'); -%>
+   <%- include('layouts/navbar'); -%>
+   
+   
+      <div class="main">
+         <h1>What button would you like to click</h1>           
+         
+         <h2>General Functionality</h2>         
+         <form id="formulier" action="/manageActions" method="POST">
+            <textarea style="display:none;" id="actie" name="actie"></textarea> 
+                      
+         </form>
+         <table style="width:45%;border:none;">
+            <tr>
+               <td style="width:45%;border:none;">Generate EUDCC Compatible VC as QR Code</td>
+               <td style="border:none;"><button id="createPN"   type="button"  onclick="formulierActie('createData');">Generate PN</button></td>   
+            </tr>
+            <tr>
+               <td style="border:none;">Verrify QRCODE containing EUDCC Compatible VC</td>
+               <td style="border:none;"><button id="verifyData" type="button"  onclick="formulierActie('verifyData');">Verify PN</button></td> 
+         </table> 
+         <img id="QRCode" alt="Prior Notification QR CODE" width="1000" height="1000" style="border: 5px solid #555;"> 
+         <!-- <img src="/img/QRCode.png" alt="Prior Notification QR CODE" width="1000" height="1000"> --> 
+      </div>
+      <script src="/js/actions.js"></script>
+   </body>
+</html>

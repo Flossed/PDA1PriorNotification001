@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>QCodeDecoder - Camera using html5-qrcode</title>
+   </head>
+   <%- include('layouts/header'); -%>
+   <body onload="renderResult(<%=PDA1PN%>);"> 
+      <%- include('layouts/heading'); -%>
+      <%- include('layouts/navbar'); -%>
+      <div class="main">
+         <h1>Scan it</h1> 
+         <div id="reader" width="600px" heigth="600px"></div>
+         <input type="file" id="qr-input-file" accept="image/*">
+         <div class="PDA1result">
+          <h2>Result</h2>          
+          <textarea  rows='100'cols='80' id="qr-result" name="qr-result"></textarea> 
+      </div>
+      </div>
+      
+      
+      <form id="QRCODEForm" action="/manageQRCodeScan" method="POST">
+        <textarea style="display:none;" id="decodedQRCode" name="decodedQRCode"></textarea>         
+      </form>
+      <script src="./js/html5-qrcode/html5-qrcode.min.js"></script>       
+      <script>
+         
+
+const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+// File based scanning
+const fileinput = document.getElementById('qr-input-file');
+fileinput.addEventListener('change', e => {
+  if (e.target.files.length == 0) {
+    // No file selected, ignore 
+    return;
+  }
+
+  const imageFile = e.target.files[0];
+  // Scan QR Code
+  html5QrCode.scanFile(imageFile, true)
+  .then(decodedText => {
+    base64String =  decodedText.toString('base64'); 
+    
+    document.getElementById('decodedQRCode').innerText = decodedText;
+    document.getElementById("QRCODEForm").submit();
+
+  })
+  .catch(err => {
+    // failure, handle it.
+    console.log(`Error scanning file. Reason: ${err}`)
+  });
+});
+
+function renderResult(PDAPN1)
+{   if ( typeof PDAPN1 !== 'undefined') 
+    {   console.log('PDAPN1 data is : '); 
+        console.log(JSON.stringify(PDAPN1, null, 2)); 
+        document.getElementById('qr-result').value = JSON.stringify(PDAPN1, null, 2);
+    }
+    else
+    {   console.log('PDAPN1 data is undefined');
+    }
+}
+
+
+      </script>
+   </body>
+</html>

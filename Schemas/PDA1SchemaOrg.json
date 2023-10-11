@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://SCHEMALOCATION/schemas/PDA1RequestFormrequest",
+  "type": "object",
+  "unevaluatedProperties": false,
+  "properties": {
+    "section1": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "personalIdentificationNumber": {
+          "$ref": "#/$defs/PDA1RequestFormPINType"
+        },
+        "sex": {
+          "$ref": "#/$defs/PDA1RequestFormSexType"
+        },
+        "surname": {
+          "$ref": "#/$defs/PDA1RequestFormPersonNameType"
+        },
+        "forenames": {
+          "$ref": "#/$defs/PDA1RequestFormPersonNameType"
+        },
+        "surnameAtBirth": {
+          "$ref": "#/$defs/PDA1RequestFormPersonNameType"
+        },
+        "dateBirth": {
+          "$ref": "#/$defs/PDA1RequestFormBusinessDateType"
+        },
+        "nationalities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PDA1RequestFormNationalityType"
+          }
+        },
+        "placeBirth": {
+          "$ref": "#/$defs/PDA1RequestFormPlaceBirthType"
+        },
+        "stateOfResidenceAddress": {
+          "$ref": "#/$defs/PDA1RequestFormAddressType"
+        },
+        "stateOfStayAddress": {
+          "$ref": "#/$defs/PDA1RequestFormAddressType"
+        }
+      },
+      "required": []
+    },
+    "section2": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "memberStateWhichLegislationApplies": {
+          "$ref": "#/$defs/PDA1RequestFormEUEFTACountryType"
+        },
+        "startingDate": {
+          "$ref": "#/$defs/PDA1RequestFormBusinessDateType"
+        },
+        "endingDate": {
+          "$ref": "#/$defs/PDA1RequestFormBusinessDateType"
+        },
+        "certificateForDurationActivity": {
+          "type": "boolean"
+        },
+        "determinationProvisional": {
+          "type": "boolean"
+        },
+        "transitionRulesApplyAsEC8832004": {
+          "type": "boolean"
+        }
+      },
+      "required": []
+    },
+    "section3": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "postedEmployedPerson": {
+          "type": "boolean"
+        },
+        "employedTwoOrMoreStates": {
+          "type": "boolean"
+        },
+        "postedSelfEmployedPerson": {
+          "type": "boolean"
+        },
+        "selfEmployedTwoOrMoreStates": {
+          "type": "boolean"
+        },
+        "civilServant": {
+          "type": "boolean"
+        },
+        "contractStaff": {
+          "type": "boolean"
+        },
+        "mariner": {
+          "type": "boolean"
+        },
+        "employedAndSelfEmployed": {
+          "type": "boolean"
+        },
+        "civilAndEmployedSelfEmployed": {
+          "type": "boolean"
+        },
+        "flightCrewMember": {
+          "type": "boolean"
+        },
+        "exception": {
+          "type": "boolean"
+        },
+        "exceptionDescription": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        },
+        "workingInStateUnder21": {
+          "type": "boolean"
+        }
+      },
+      "required": []
+    },
+    "section4": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "employee": {
+          "type": "boolean"
+        },
+        "selfEmployedActivity": {
+          "type": "boolean"
+        },
+        "employerSelfEmployedActivityCodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PDA1RequestFormTinyStringType"
+          }
+        },
+        "nameBusinessName": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        },
+        "registeredAddress": {
+          "$ref": "#/$defs/PDA1RequestFormAddressType"
+        }
+      },
+      "required": []
+    },
+    "section5": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "workPlaceNames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PDA1RequestFormWorkPlaceNameType"
+          }
+        },
+        "workPlaceNamesBlob": {
+          "$ref": "#/$defs/PDA1RequestFormVeryLongStringType"
+        },
+        "workPlaceAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PDA1RequestFormWorkPlaceAddressType"
+          }
+        },
+        "workPlaceAddressesBlob": {
+          "$ref": "#/$defs/PDA1RequestFormVeryLongStringType"
+        },
+        "noFixedAddress": {
+          "type": "boolean"
+        },
+        "noFixedAddressDescription": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        }
+      },
+      "required": []
+    },
+    "section6": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        },
+        "address": {
+          "$ref": "#/$defs/PDA1RequestFormAddressType"
+        },
+        "institutionID": {
+          "$ref": "#/$defs/PDA1RequestFormPINType"
+        },
+        "officeFaxNo": {
+          "$ref": "#/$defs/PDA1RequestFormShortStringType"
+        },
+        "officePhoneNo": {
+          "$ref": "#/$defs/PDA1RequestFormShortStringType"
+        },
+        "email": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        },
+        "date": {
+          "$ref": "#/$defs/PDA1RequestFormBusinessDateType"
+        },
+        "signature": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        }
+      },
+      "required": []
+    }
+  },
+  "$defs": {
+    "PDA1RequestFormSexType": {
+      "enum": [
+        "01",
+        "02",
+        "98",
+        "99"
+      ]
+    },
+    "PDA1RequestFormBusinessDateType": {
+      "type": "string",
+      "format": "date"
+    },
+    "PDA1RequestFormNationalityType": {
+      "enum":["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","EL","HU","IS","IE","IT","LV","LI","LT","LU","MT","NL","NO",
+              "PL","PT","RO","SK","SI","ES","SE","CH","UK","XR","XS","XU","AF","AL","DZ","AD","AO","AG","AR","AM","AU","AZ","BS","BH","BD","BB",
+              "BY","BZ","BJ","BT","BO","BA","BW","BR","BN","BF","BI","KH","CM","CA","CV","CF","TD","CL","CN","CO","KM","CG","CD","CR","CI","CU",
+              "DJ","DM","DO","EC","EG","SV","GQ","ER","ET","FJ","GA","GM","GE","GH","GD","GT","GN","GW","GY","HT","VA","HN","IN","ID","IR","IQ",
+              "IL","JM","JP","JO","KZ","KE","KI","KP","KR","KW","KG","LA","LB","LS","LR","LY","MK","MG","MW","MY","MV","ML","MH","MR","MU","MX",
+              "FM","MD","MC","MN","ME","MA","MZ","MM","NA","NR","NP","NZ","NI","NE","NG","OM","PK","PW","PS","PA","PG","PY","PE","PH","QA","RU",
+              "RW","KN","LC","VC","WS","SM","ST","SA","SN","RS","SC","SL","SG","SB","SO","ZA","SS","LK","SD","SR","SZ","SY","TJ","TZ","TH","TL",
+              "TG","TO","TT","TN","TR","TM","TV","UG","UA","AE","US","UY","UZ","VU","VE","VN","YE","ZM","ZW","BQAQ","BUMM","BYAA","CTKI","CSHH",
+              "DYBJ","NQAQ","TPTL","FXFR","AIDJ","FQHH","DDDE","GEHH","JTUM","MIUM","ANHH","NTHH","NHVU","PCHH","PZPA","CSXX","SKIN","RHZW",
+              "HVBF","PUUM","SUHH","VDVN","WKUM","YDYE","YUCS","ZRCD"]
+    },
+    "PDA1RequestFormTinyStringType": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 25
+    },
+    "PDA1RequestFormShortStringType": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 65
+    },
+    "PDA1RequestFormMediumStringType": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 155
+    },
+    "PDA1RequestFormVeryLongStringType": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 500
+    },
+    "PDA1RequestFormPINType": {
+      "$ref": "#/$defs/PDA1RequestFormShortStringType"
+    },
+    "PDA1RequestFormPersonNameType": {
+      "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+    },
+    "PDA1RequestFormEUEFTACountryType": {
+      "enum":["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","EL","HU","IS","IE","IT","LV","LI","LT","LU","MT","NL","NO","PL","PT","RO","SK","SI","ES","SE","CH","UK"]
+    },
+    "PDA1RequestFormPlaceBirthType": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "town": {
+          "$ref": "#/$defs/PDA1RequestFormShortStringType"
+        },
+        "region": {
+          "$ref": "#/$defs/PDA1RequestFormShortStringType"
+        },
+        "countryCode": {
+          "$ref": "#/$defs/PDA1RequestFormEUEFTACountryType"
+        }
+      },
+      "required": []
+    },
+    "PDA1RequestFormAddressType": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "buildingName": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        },
+        "streetNo": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        },
+        "postCode": {
+          "$ref": "#/$defs/PDA1RequestFormTinyStringType"
+        },
+        "town": {
+          "$ref": "#/$defs/PDA1RequestFormShortStringType"
+        },
+        "region": {
+          "$ref": "#/$defs/PDA1RequestFormShortStringType"
+        },
+        "countryCode": {
+          "$ref": "#/$defs/PDA1RequestFormEUEFTACountryType"
+        }
+      },
+      "required": []
+    },
+    "PDA1RequestFormWorkPlaceNameType": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "seqno": {
+          "type": "number"
+        },
+        "flagStatehomeBase": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        },
+        "companyNameVesselName": {
+          "$ref": "#/$defs/PDA1RequestFormMediumStringType"
+        }
+      },
+      "required": []
+    },
+    "PDA1RequestFormWorkPlaceAddressType": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "seqno": {
+          "type": "number"
+        },
+        "address": {
+          "$ref": "#/$defs/PDA1RequestFormAddressType"
+        }
+      },
+      "required": []
+    },
+    "required": ["section1","section2","section3"]
+  }
+}
