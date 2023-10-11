@@ -840,7 +840,7 @@ async function _05_transformJSONToCBOR ( jsonDocument )
 
         const sizeDifference          = Math.trunc( ( ( encoded.length - jsonDocument.length ) / jsonDocument.length ) * 10000 ) / 100;
 
-        logger.debug( applicationName + ':eudcc:_05_transformJSONToCBOR:sizes json: [' + jsonDocument.length + '] cbor: [' + encoded.length  + '];Size difference: [' + sizeDifference   + '%]' );
+        logger.debug( applicationName + ':eudcc:_05_transformJSONToCBOR:sizes json: [' + jsonDocument.length + '] => cbor: [' + encoded.length  + '];Size difference: [' + sizeDifference   + '%]' );
 
         const response                = { ...EC.noError } ;
         response.body                 = encoded;
@@ -923,21 +923,21 @@ async function _07_signCBOROPbject ( cborObject, keyInformation )
 }
 
 
-function _09_base45Encode ( encoded )
+function _09_base45Encode ( zipped )
 {   try
     {   logger.trace( applicationName + ':eudcc:_09_base45Encode:Starting' );
 
-        if ( encoded === null || typeof encoded === 'undefined' )
+        if ( zipped === null || typeof zipped === 'undefined' )
         {   logger.error( applicationName + ':eudcc:_09_base45Encode:incorrect input parameters' );
             const response               = EC.badRequest;
             return response;
         }
 
-        const base45Encoded           = base45.encode( encoded );
+        const base45Encoded           = base45.encode( zipped );
 
-        const sizeDifference          = Math.trunc( ( ( base45Encoded.length - encoded.length ) / encoded.length ) * 10000 ) / 100;
+        const sizeDifference          = Math.trunc( ( ( base45Encoded.length - zipped.length ) / zipped.length ) * 10000 ) / 100;
 
-        logger.debug( applicationName + ':eudcc:_09_base45Encode:sizes cbor: [' + encoded.length + '] base45: [' + base45Encoded.length  + '];Size difference: [' + sizeDifference   + '%]' );
+        logger.debug( applicationName + ':eudcc:_09_base45Encode:sizes zipped: [' + zipped.length + '] => base45: [' + base45Encoded.length  + '];Size difference: [' + sizeDifference   + '%]' );
 
         const response                = { ...EC.noError } ;
         response.body                 = base45Encoded;
@@ -952,23 +952,23 @@ function _09_base45Encode ( encoded )
     }
 }
 
-async function _10_zlibCompress ( base45Encoded )
+async function _10_zlibCompress ( cborData )
 {   try
     {   logger.trace( applicationName + ':eudcc:_10_zlibCompress:Starting' );
 
-        if ( base45Encoded === null || typeof base45Encoded === 'undefined' )
+        if ( cborData === null || typeof cborData === 'undefined' )
         {   logger.error( applicationName + ':eudcc:_10_zlibCompress:incorrect input parameters' );
             const response               = EC.badRequest;
             return response;
         }
 
-        const zlibCompressed          = zlib.deflateSync( base45Encoded );
+        const zlibCompressed          = zlib.deflateSync( cborData );
 
-        const sizeDifference          = Math.trunc( ( ( zlibCompressed.length - base45Encoded.length ) / base45Encoded.length ) * 10000 ) / 100;
+        const sizeDifference          = Math.trunc( ( ( zlibCompressed.length - cborData.length ) / cborData.length ) * 10000 ) / 100;
 
         await fs.writeFile( zlibbed, zlibCompressed );
 
-        logger.debug( applicationName + ':eudcc:_10_zlibCompress:sizes base45: [' + base45Encoded.length + '] zlib: [' + zlibCompressed.length  + '];Size difference: [' + sizeDifference   + '%]' );
+        logger.debug( applicationName + ':eudcc:_10_zlibCompress:sizes cbor: [' + cborData.length + '] => zlib: [' + zlibCompressed.length  + '];Size difference: [' + sizeDifference   + '%]' );
 
         const response                = { ...EC.noError } ;
         response.body                 = zlibCompressed;
@@ -1214,6 +1214,13 @@ async function _25_decodeCBORBuffer ( inputData )
 async function QR2JSON ( QRCodeBuffer )
 {   try
     {   logger.trace( applicationName + ':eudcc:QR2JSON:Starting' );
+        
+        
+        if ( QRCodeBuffer === null || typeof QRCodeBuffer === 'undefined' )
+        {   logger.error( applicationName + ':eudcc:QR2JSON:incorrect input parameters' );
+            const response               = EC.badRequest;
+            return response;
+        }
 
         const resultBase45                   = await  _21_decodeBase45Buffer( QRCodeBuffer );
         if ( resultBase45.returnCode !== EC.noError.returnCode )
